@@ -208,8 +208,20 @@ $(window).scroll(function () {
   moveAnimation();
   fadeAnime();
 });
-// ページが読み込まれたらすぐに動かしたい場合の記述
+
+// ページを読み込む　背景が表示　ロゴが浮き上がる　ロゴが1.2秒後に消える　背景が消える　bodyに.appearが付いて背景上下が現れる　背景上が消えたときにfadeAnimeが発火する
 $(window).on("load", function () {
-  moveAnimation();
-  fadeAnime();
+  $("#splash-logo").delay(1200).fadeOut("slow");
+  $("#splash")
+    .delay(1500) //1.5秒待って、
+    .fadeOut("slow", function () {
+      $("body").addClass("appear"); //これで背景上下が現れる
+      ScrollTimelineAnime(); //機能編 9-1-5 スクロールをするとエリアの高さに合わせて線が伸びる関数を呼ぶ
+      ScrollAnime(); //機能編 5-1-9スクロール途中でヘッダーが消え、上にスクロールすると復活の関数を呼ぶ
+      moveAnimation(); //印象編 4-13 ランダムに現れる（CSS x jQuery）
+    });
+
+  $(".splashbg1").on("animationend", function () {
+    fadeAnime(); //印象編 4 最低限おぼえておきたい動きの関数を呼ぶ
+  });
 });
